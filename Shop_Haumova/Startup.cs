@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Shop_Haumova.Data.Interfaces;
+using Shop_Haumova.Data.Mocks;
 
 namespace Shop_Haumova
 {
@@ -14,7 +16,9 @@ namespace Shop_Haumova
     {
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
+            services.AddTransient<ICategorys, MockCategorys>();
+            services.AddTransient<IItems, MockItems>();
+            services.AddMvc(option => option.EnableEndpointRouting = false);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
