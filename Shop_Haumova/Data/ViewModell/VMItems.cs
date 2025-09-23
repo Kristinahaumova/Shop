@@ -7,6 +7,6 @@ namespace Shop_Haumova.Data.ViewModell
     {
         public IEnumerable<Items> Items { get; set; }
         public IEnumerable<Categorys> Categorys { get; set; }
-        public int SelectCategory = 0;
+        public int SelectCategory { get; set; }
     }
 }

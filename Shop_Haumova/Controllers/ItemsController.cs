@@ -7,6 +7,7 @@ using Shop_Haumova.Data.ViewModell;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace Shop_Haumova.Controllers
 {
@@ -52,12 +53,56 @@ namespace Shop_Haumova.Controllers
             Items newItems = new Items();
             newItems.Name = name;
             newItems.Description = description;
-            newItems.Img = files.FileName;
+            newItems.Img = "/img/" + Path.GetFileName(files.FileName);
             newItems.Price = Convert.ToInt32(price);
             newItems.Category = new Categorys() { Id = idCategory };
 
             int id = IAllItems.Add(newItems);
             return Redirect("/Items/Update?id=" + id);
+        }
+
+        [HttpGet]
+        public IActionResult Update(int id)
+        {
+            var item = IAllItems.AllItems.FirstOrDefault(x => x.Id == id);
+            ViewBag.Categorys = IAllCategorys.AllCategorys;
+            return View(item);
+        }
+
+        [HttpPost]
+        public IActionResult Update(int id, string name, string description, IFormFile file, float price, int idCategory)
+        {
+            var existingItem = IAllItems.AllItems.FirstOrDefault(x => x.Id == id);
+            if (existingItem == null) return NotFound();
+
+            if (file != null && file.Length > 0)
+            {
+                var uploads = Path.Combine(hostingEnvironment.WebRootPath, "img");
+                Directory.CreateDirectory(uploads);
+                var fileName = Path.GetFileName(file.FileName);
+                var filePath = Path.Combine(uploads, fileName);
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    file.CopyTo(stream);
+                }
+                existingItem.Img = "/img/" + fileName;
+            }
+
+            existingItem.Name = name;
+            existingItem.Description = description;
+            existingItem.Price = Convert.ToInt32(price);
+            existingItem.Category = new Categorys() { Id = idCategory };
+
+            IAllItems.Update(existingItem);
+
+            return RedirectToAction("List");
+        }
+
+        [HttpPost]
+        public IActionResult Delete(int id)
+        {
+            IAllItems.Delete(id);
+            return RedirectToAction("List");
         }
     }
 }

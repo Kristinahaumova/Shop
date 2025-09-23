@@ -7,5 +7,7 @@ namespace Shop_Haumova.Data.Interfaces
     {
         public IEnumerable<Items> AllItems { get; }
         public int Add(Items Item);
+        public void Update(Items item);
+        public void Delete(int id);
     }
 }
