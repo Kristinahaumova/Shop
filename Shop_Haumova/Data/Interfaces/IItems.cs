@@ -6,5 +6,6 @@ namespace Shop_Haumova.Data.Interfaces
     public interface IItems
     {
         public IEnumerable<Items> AllItems { get; }
+        public int Add(Items Item);
     }
 }

@@ -40,5 +40,10 @@ namespace Shop_Haumova.Data.Mocks
                 };
             }
         }
+
+        public int Add(Items Item)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
