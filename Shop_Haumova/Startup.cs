@@ -10,11 +10,13 @@ using Microsoft.Extensions.Hosting;
 using Shop_Haumova.Data.DataBase;
 using Shop_Haumova.Data.Interfaces;
 using Shop_Haumova.Data.Mocks;
+using Shop_Haumova.Data.Models;
 
 namespace Shop_Haumova
 {
     public class Startup
     {
+        public static List<ItemsBasket> BasketItem = new List<ItemsBasket>();
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddTransient<ICategorys, DBCategory>();

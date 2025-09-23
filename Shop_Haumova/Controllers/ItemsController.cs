@@ -104,5 +104,14 @@ namespace Shop_Haumova.Controllers
             IAllItems.Delete(id);
             return RedirectToAction("List");
         }
+
+        public ActionResult Basket(int idItem = -1)
+        {
+            if (idItem != -1)
+            {
+                Startup.BasketItem.Add(new ItemsBasket(1, IAllItems.AllItems.Where(x => x.Id == idItem).First()));
+            }
+            return Json(Startup.BasketItem);
+        }
     }
 }
