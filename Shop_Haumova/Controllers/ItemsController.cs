@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Shop_Haumova.Data.Interfaces;
+using Shop_Haumova.Data.Models;
 using Shop_Haumova.Data.ViewModell;
+using System.Collections.Generic;
 
 namespace Shop_Haumova.Controllers
 {
@@ -23,6 +25,13 @@ namespace Shop_Haumova.Controllers
             VMItems.Categorys = IAllCategorys.AllCategorys;
             VMItems.SelectCategory = id;
             return View(VMItems);
+        }
+
+        [HttpGet]
+        public ViewResult Add() 
+        {
+            IEnumerable<Categorys> Categorys = IAllCategorys.AllCategorys;
+            return View(Categorys);
         }
     }
 }
