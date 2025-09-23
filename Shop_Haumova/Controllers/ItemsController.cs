@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Shop_Haumova.Data.Interfaces;
+using Shop_Haumova.Data.ViewModell;
 
 namespace Shop_Haumova.Controllers
 {
@@ -7,6 +8,7 @@ namespace Shop_Haumova.Controllers
     {
         private IItems IAllItems;
         private ICategorys IAllCategorys;
+        VMItems VMItems = new VMItems();
 
         public ItemsController(IItems IAllItems, ICategorys IAllCategorys) 
         {
@@ -14,11 +16,13 @@ namespace Shop_Haumova.Controllers
             this.IAllCategorys = IAllCategorys;
         }
 
-        public ViewResult List() 
+        public ViewResult List(int id = 0) 
         {
             ViewBag.Title = "Страница с предметами";
-            var cars = IAllItems.AllItems;
-            return View(cars);
+            VMItems.Items = IAllItems.AllItems;
+            VMItems.Categorys = IAllCategorys.AllCategorys;
+            VMItems.SelectCategory = id;
+            return View(VMItems);
         }
     }
 }
